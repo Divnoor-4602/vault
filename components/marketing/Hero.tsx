@@ -8,8 +8,8 @@ import MaxWidthWrapper from "../shared/MaxWidthWrapper";
 
 const Hero = () => {
   return (
-    <MaxWidthWrapper className="mt-48">
-      <div className="max-w-7xl items-center justify-center flex flex-col">
+    <MaxWidthWrapper className="mt-44 relative">
+      <div className="max-w-7xl items-center justify-center flex flex-col ">
         {/* badge */}
         <Badge
           variant={"outline"}
@@ -51,15 +51,16 @@ const Hero = () => {
         </svg>
 
         {/* dashboard image */}
-        <div className="mt-10">
+        <div className="mt-10 z-20">
           <Image
             src={dashboardImage}
             alt="dashboard"
             width={1200}
             height={800}
-            className=" border border-blue-200 shadow-lg"
+            className=" border  rounded-2xl  "
           />
         </div>
+        <div className="w-full h-[300px] blur-[80px] bg-gradient-to-r from-blue-400 to-cyan-400 absolute bottom-0 transform-gpu" />
       </div>
     </MaxWidthWrapper>
   );

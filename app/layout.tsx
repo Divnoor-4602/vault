@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import Navbar from "@/components/shared/Navbar";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,7 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ClerkProvider>
-        <body className={`${inter.variable}  antialiased`}>{children}</body>
+        <body className={`${inter.variable}  antialiased`}>
+          <Navbar />
+          {children}
+        </body>
       </ClerkProvider>
     </html>
   );
