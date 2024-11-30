@@ -60,8 +60,7 @@ export async function POST(req: Request) {
   // if the user is created in clerk database, create in mongo database
   if (eventType === "user.created") {
     console.log("Creating user");
-    const { id, email_addresses, first_name, last_name, username, image_url } =
-      evt.data;
+    const { id, email_addresses, username, image_url } = evt.data;
 
     const mongoUser = await createUser({
       clerk_id: id,
@@ -85,8 +84,7 @@ export async function POST(req: Request) {
 
   // if the user is deleted, delete in mongo database
   if (eventType === "user.deleted") {
-    const { id } = evt.data;
-
+    // const { id } = evt.data;
     // todo: delete the user in your database
   }
 

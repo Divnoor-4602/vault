@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import logo from "../../assets/images/vault-logo.svg";
