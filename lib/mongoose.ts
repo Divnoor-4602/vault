@@ -10,7 +10,7 @@ export const databaseConnect = async () => {
   if (isConnected) return console.log("MongoDB is already connected!");
 
   try {
-    await mongoose.connect(process.env.MONGODB_URI, { dbName: "SwiftStudy" });
+    await mongoose.connect(process.env.MONGODB_URI, { dbName: "vault" });
     isConnected = true;
     console.log("MongoDB is connected");
   } catch (error) {
