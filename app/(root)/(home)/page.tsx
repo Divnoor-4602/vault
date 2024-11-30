@@ -3,7 +3,7 @@ import React from "react";
 
 const Page = () => {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="bg-white px-4">
       <Hero />
     </main>
   );
