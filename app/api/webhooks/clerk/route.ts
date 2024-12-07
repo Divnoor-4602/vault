@@ -1,8 +1,13 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable camelcase */
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { WebhookEvent } from "@clerk/nextjs/server";
-import { createUser } from "../../../../lib/actions/users.action";
+import {
+  createUser,
+  deleteUser,
+  updateUser,
+} from "../../../../lib/actions/users.action";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -21,9 +26,12 @@ export async function POST(req: Request) {
 
   // Get the headers
 
-  const headerPayload = await headers();
+  const headerPayload = headers();
+  // @ts-expect-error
   const svix_id = headerPayload.get("svix-id");
+  // @ts-expect-error
   const svix_timestamp = headerPayload.get("svix-timestamp");
+  // @ts-expect-error
   const svix_signature = headerPayload.get("svix-signature");
 
   // If there are no headers, error out
@@ -62,7 +70,6 @@ export async function POST(req: Request) {
 
   // if the user is created in clerk database, create in mongo database
   if (eventType === "user.created") {
-    console.log("Creating user");
     const { id, email_addresses, username, image_url } = evt.data;
 
     const mongoUser = await createUser({
@@ -74,21 +81,22 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ message: "OK", user: mongoUser });
   } else if (eventType === "user.updated") {
-    console.log("updating user");
-    // const { id, email_addresses, first_name, last_name, image_url, username } =
-    //   evt.data;
+    const { id, email_addresses, image_url, username } = evt.data;
 
-    //  // todo: update a user in your database
-    //   path: `/profile/${id}`,
-    // });
+    const mongoUserUpdated = await updateUser({
+      clerk_id: id,
+      username,
+      email: email_addresses[0].email_address,
+      image_url,
+    });
 
-    // return NextResponse.json({ message: "OK", user: mongoUserUpdated });
+    return NextResponse.json({ message: "OK", user: mongoUserUpdated });
   }
 
-  // if the user is deleted, delete in mongo database
   if (eventType === "user.deleted") {
-    // const { id } = evt.data;
-    // todo: delete the user in your database
+    const { id } = evt.data;
+
+    await deleteUser({ clerk_id: id });
   }
 
   return new Response("", { status: 201 });

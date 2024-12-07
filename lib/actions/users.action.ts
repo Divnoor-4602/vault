@@ -2,11 +2,14 @@
 
 import User from "../../database/user.model";
 import { databaseConnect } from "../mongoose";
-import { CreateUserParams } from "./shared.types";
+import {
+  CreateUserParams,
+  DeleteUserParams,
+  UpdateUserParams,
+} from "./shared.types";
 
 export const createUser = async (userData: CreateUserParams) => {
   try {
-    console.log("creating user");
     await databaseConnect();
 
     const user = await User.create(userData);
@@ -18,4 +21,40 @@ export const createUser = async (userData: CreateUserParams) => {
   }
 };
 
-export const updateUser = async () => {};
+export const updateUser = async (params: UpdateUserParams) => {
+  try {
+    await databaseConnect();
+
+    const { clerk_id, username, email, image_url } = params;
+
+    const user = await User.findOneAndUpdate(
+      { clerk_id },
+      {
+        username,
+        email,
+        image_url,
+      },
+      {
+        new: true,
+      }
+    );
+
+    return user;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteUser = async (params: DeleteUserParams) => {
+  try {
+    await databaseConnect();
+
+    const { clerk_id } = params;
+
+    await User.findOneAndDelete({ clerk_id });
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

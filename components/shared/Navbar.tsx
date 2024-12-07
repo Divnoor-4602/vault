@@ -2,7 +2,13 @@ import React from "react";
 import MaxWidthWrapper from "./MaxWidthWrapper";
 import Image from "next/image";
 import logo from "../../assets/images/vault-logo.svg";
-import { SignedIn, SignedOut, SignInButton, SignUpButton } from "@clerk/nextjs";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 import Link from "next/link";
 import { Button, buttonVariants } from "../ui/button";
 
@@ -17,7 +23,25 @@ const Navbar = () => {
         </Link>
 
         {/* menu items */}
-        <SignedIn></SignedIn>
+        <SignedIn>
+          <div className="flex items-center gap-3">
+            <Link
+              href={"/saved"}
+              className={buttonVariants({
+                variant: "ghost",
+              })}
+            >
+              📋 My list
+            </Link>
+            <Link
+              href={"/dashboard"}
+              className={`${buttonVariants({})} items-center flex gap-1`}
+            >
+              📚 Dashboard
+            </Link>
+            <UserButton />
+          </div>
+        </SignedIn>
         <SignedOut>
           <div className="flex items-center gap-2">
             <SignInButton>
