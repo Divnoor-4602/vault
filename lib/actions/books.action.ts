@@ -37,14 +37,21 @@ export const searchBookTitles = async (title: string) => {
 };
 
 interface SearchBooksParams {
-  title: string;
-  author: string;
-  subject: string;
+  title?: string;
+  author?: string;
+  subject?: string;
   type: string;
 }
 
 export const searchBooks = async (params: SearchBooksParams) => {
   try {
+    const { title, author, subject, type } = params;
+
+    if (type === "interests") {
+      const books = await fetch(
+        `${process.env.GET_BOOKS_SEARCH_URL}?title=${title}&author=${author}&subject=${subject}&limit=10`
+      );
+    }
   } catch (error) {
     console.log(error);
     throw new Error("Error fetching books");

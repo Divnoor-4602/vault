@@ -1,11 +1,23 @@
 import GetRecommendationsbutton from "@/components/shared/GetRecommendationsbutton";
 import Interests from "@/components/shared/Interests";
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
+import { searchBooks } from "@/lib/actions/books.action";
+
+import { auth } from "@clerk/nextjs/server";
 
 import React from "react";
 
 const Page = async () => {
   // get the user interest books
+  const { userId } = await auth();
+
+  console.log(userId);
+
+  const interestingBooks = await searchBooks({
+    type: "interests",
+  });
+
+  console.log(interestingBooks);
 
   return (
     <>
