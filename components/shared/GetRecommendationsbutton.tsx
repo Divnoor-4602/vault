@@ -11,7 +11,7 @@ const GetRecommendationsbutton = () => {
     <>
       {" "}
       <motion.button
-        className={`${buttonVariants({})} w-fit self-end`}
+        className={`${buttonVariants({})} w-fit max-sm:self-end`}
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         whileHover={{
@@ -28,7 +28,7 @@ const GetRecommendationsbutton = () => {
         initial={{ opacity: 0 }}
         animate={{
           opacity: isHovered ? 1 : 0,
-          translateX: isHovered ? 0 : 20,
+          translateX: isHovered ? 0 : -30,
         }}
       >
         📚

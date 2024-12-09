@@ -3,8 +3,9 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import logo from "../../assets/images/vault-logo.svg";
 import dashboardImage from "../../assets/images/twill-dashboard-preview.jpg";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import MaxWidthWrapper from "../shared/MaxWidthWrapper";
+import Link from "next/link";
 
 const Hero = () => {
   return (
@@ -35,7 +36,12 @@ const Hero = () => {
         </h2>
 
         {/* CTA */}
-        <Button className="text-sm mt-6">Start Curating Now 📚</Button>
+        <Link
+          className={`text-sm mt-6 ${buttonVariants()}`}
+          href={"/dashboard"}
+        >
+          Start Curating Now 📚
+        </Link>
         <svg
           className="w-16 h-16 text-blue-600  rotate-180 z-50 mt-3"
           viewBox="0 0 77 85"
@@ -51,7 +57,7 @@ const Hero = () => {
         </svg>
 
         {/* dashboard image */}
-        <div className="mt-10 z-20">
+        <div className="mt-10  z-20">
           <Image
             src={dashboardImage}
             alt="dashboard"

@@ -6,6 +6,7 @@ interface IUser extends Document {
   email: string;
   books: Schema.Types.ObjectId[];
   image_url?: string;
+  interests?: string[];
 }
 
 const userSchema = new Schema<IUser>(
@@ -15,6 +16,7 @@ const userSchema = new Schema<IUser>(
     email: { type: String, required: true },
     books: [{ type: Schema.Types.ObjectId, ref: "Book" }],
     image_url: { type: String },
+    interests: [{ type: String }],
   },
   {
     timestamps: true,
