@@ -52,7 +52,9 @@ export const searchBooks = async (params: SearchBooksParams) => {
         `${process.env.GET_BOOKS_SEARCH_URL}?title=${title}&author=${author}&subject=${subject}&limit=10`
       );
 
-      console.log(books);
+      const data = await books.json();
+
+      return data.docs;
     }
   } catch (error) {
     console.log(error);
