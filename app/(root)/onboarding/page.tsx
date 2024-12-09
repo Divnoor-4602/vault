@@ -1,8 +1,5 @@
 "use client";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, useForm } from "react-hook-form";
-import { z } from "zod";
 // import constants
 import { AUTHORS, SUBJECTS } from "@/constants";
 import { Input } from "@/components/ui/input";
@@ -19,8 +16,6 @@ import { toast } from "sonner";
 import { completeUserOnboarding } from "@/lib/actions/users.action";
 import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
-
-const formSchema = z.object({});
 
 export default function OnBoardingComponent() {
   const { user } = useUser();
@@ -121,11 +116,6 @@ export default function OnBoardingComponent() {
     debounceRequest(e.target.value);
   };
 
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {},
-  });
-
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (subjects.filter((subject) => subject.selected).length < 3) {
@@ -169,10 +159,10 @@ export default function OnBoardingComponent() {
   const searchContainerRef = useRef(null);
 
   useEffect(() => {
-    const handleOutsideClick = (event: any) => {
+    const handleOutsideClick = (event: MouseEvent) => {
       if (
         searchContainerRef.current &&
-        // @ts-ignore
+        // @ts-expect-error ts-migrate(2531) FIXME: Object is possibly 'null'.
         !searchContainerRef.current.contains(event.target)
       ) {
         setOpen(false);

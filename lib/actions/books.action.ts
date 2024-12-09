@@ -51,6 +51,8 @@ export const searchBooks = async (params: SearchBooksParams) => {
       const books = await fetch(
         `${process.env.GET_BOOKS_SEARCH_URL}?title=${title}&author=${author}&subject=${subject}&limit=10`
       );
+
+      console.log(books);
     }
   } catch (error) {
     console.log(error);
