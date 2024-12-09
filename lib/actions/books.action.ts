@@ -28,6 +28,8 @@ export const searchBookTitles = async (title: string) => {
         });
       });
 
+      console.log(booksToDisplay);
+
       return booksToDisplay;
     }
   } catch (error) {
