@@ -66,8 +66,7 @@ export const deleteUser = async (params: DeleteUserParams) => {
 export const completeUserOnboarding = async (
   params: CompleteUserOnboardingParams
 ) => {
-  // const { authors, genres, books } = params;
-  console.log("params", params);
+  const { authors, genres, books } = params;
 
   const { userId } = await auth();
 
@@ -87,6 +86,11 @@ export const completeUserOnboarding = async (
     // update mongo user with interests
     await updateUser({
       clerk_id: userId,
+      preferences: {
+        genres: genres || [],
+        authors: authors || [],
+        books: books || [],
+      },
     });
 
     return { message: res.publicMetadata };

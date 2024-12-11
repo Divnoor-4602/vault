@@ -10,7 +10,11 @@ export interface UpdateUserParams {
   username?: string | null;
   email?: string;
   image_url?: string;
-  interests?: string[];
+  preferences?: {
+    genres: string[];
+    authors: string[];
+    books: string[];
+  };
 }
 
 export interface DeleteUserParams {
