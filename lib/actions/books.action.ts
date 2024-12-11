@@ -1,65 +1,33 @@
 "use server";
 
-// open library api actions
-export const getBooks = async () => {
-  const books = await fetch(`${process.env.GET_BOOKS_SEARCH_URL}?`);
+import { BookParams, SearchBookParams } from "./shared.types";
 
-  const data = await books.json();
-
-  console.log(data);
-
-  // console.log(data.docs.length);
-};
-
-export const searchBookTitles = async (title: string) => {
+export const searchBooks = async (params: SearchBookParams) => {
   try {
-    if (title.length > 0) {
-      const books = await fetch(
-        `${process.env.GET_BOOKS_SEARCH_URL}?title=${title}&limit=10`
-      );
-      const data = await books.json();
+    const { title, author, genre, limit } = params;
 
-      const booksToDisplay: { title: string; author: string }[] = [];
+    const response = await fetch(
+      `${process.env.GET_BOOKS_SEARCH_URL}?q=${title}&limit=${limit}`
+    );
 
-      data.docs.map((book: { title: string; author_name: string }) => {
-        booksToDisplay.push({
-          title: book.title,
-          author: book.author_name ? book.author_name[0] : "",
-        });
-      });
+    const books = await response.json();
 
-      console.log(booksToDisplay);
+    const formattedBooks = books.docs.map((book: BookParams) => {
+      return {
+        title: book.title,
+        author:
+          book.author_name && book.author_name[0]
+            ? book.author_name[0]
+            : book.author_name,
+        coverId: `${process.env.GET_BOOKS_COVER_URL}/${book.cover_i}-M.jpg`,
+      };
+    });
 
-      return booksToDisplay;
-    }
+    console.log(formattedBooks);
+
+    return formattedBooks;
   } catch (error) {
     console.log(error);
-    throw new Error("Error fetching books");
-  }
-};
-
-interface SearchBooksParams {
-  title?: string;
-  author?: string;
-  subject?: string;
-  type: string;
-}
-
-export const searchBooks = async (params: SearchBooksParams) => {
-  try {
-    const { title, author, subject, type } = params;
-
-    if (type === "interests") {
-      const books = await fetch(
-        `${process.env.GET_BOOKS_SEARCH_URL}?title=${title}&author=${author}&subject=${subject}&limit=10`
-      );
-
-      const data = await books.json();
-
-      return data.docs;
-    }
-  } catch (error) {
-    console.log(error);
-    throw new Error("Error fetching books");
+    throw new Error("Failed to search books");
   }
 };

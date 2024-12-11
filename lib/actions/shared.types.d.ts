@@ -16,3 +16,16 @@ export interface UpdateUserParams {
 export interface DeleteUserParams {
   clerk_id: string | undefined;
 }
+
+export interface SearchBookParams {
+  title?: string = "";
+  author?: string = "";
+  genre?: string = "";
+  limit?: number = 10;
+}
+
+export interface BookParams {
+  title: any;
+  author_name: string;
+  cover_i: string;
+}

@@ -2,7 +2,7 @@
 
 import { Loader2 } from "lucide-react";
 import React from "react";
-
+import { motion } from "motion/react";
 interface BookSearchResultProps {
   isLoading: boolean;
   books: { title: string; author: string }[];
@@ -16,7 +16,7 @@ const BookSearchResult = ({
 }: BookSearchResultProps) => {
   console.log(books);
   return (
-    <div className="absolute rounded-2xl w-full bg-white shadow-lg z-20 border mt-4 overflow-y-auto max-h-[500px]">
+    <motion.div className="absolute rounded-2xl w-full bg-white shadow-lg z-20 border mt-4 overflow-y-auto max-h-[500px]">
       <div className="flex flex-col gap-4 my-4">
         <h1 className="text-center font-bold tracking-tighter text-xl text-gray-800">
           Search Results
@@ -50,7 +50,7 @@ const BookSearchResult = ({
           )}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

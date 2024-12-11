@@ -11,14 +11,6 @@ const Page = async () => {
   // get the user interest books
   const { userId } = await auth();
 
-  console.log(userId);
-
-  const interestingBooks = await searchBooks({
-    type: "interests",
-  });
-
-  console.log(interestingBooks);
-
   return (
     <>
       <MaxWidthWrapper>
