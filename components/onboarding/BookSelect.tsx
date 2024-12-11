@@ -87,10 +87,10 @@ const BookSelect = ({ onBookSelect }: BookSelectProps) => {
       });
 
       // set books
-      setSearchedResults((prev) => books);
+      setSearchedResults(books);
     } catch (error) {
       toast.error("Failed to search books!, try again later");
-      throw new Error("Failed to search books");
+      throw error;
     } finally {
       setIsLoading(false);
     }

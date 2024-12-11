@@ -4,10 +4,27 @@ import { BookParams, SearchBookParams } from "./shared.types";
 
 export const searchBooks = async (params: SearchBookParams) => {
   try {
-    const { title, author, genre, limit } = params;
+    const { title, author, genre, limit, type } = params;
+
+    let searchQuery = "";
+
+    switch (type) {
+      case "title":
+        searchQuery = `title=${title}`;
+        break;
+      case "author":
+        searchQuery = `author=${author}`;
+        break;
+      case "genre":
+        searchQuery = `subject=${genre}`;
+        break;
+      default:
+        searchQuery = `q=${title}`;
+        break;
+    }
 
     const response = await fetch(
-      `${process.env.GET_BOOKS_SEARCH_URL}?q=${title}&limit=${limit}`
+      `${process.env.GET_BOOKS_SEARCH_URL}?${searchQuery}&limit=${limit}`
     );
 
     const books = await response.json();

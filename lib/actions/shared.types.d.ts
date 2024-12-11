@@ -24,14 +24,15 @@ export interface CompleteUserOnboardingParams {
 }
 
 export interface SearchBookParams {
-  title?: string = "";
-  author?: string = "";
-  genre?: string = "";
-  limit?: number = 10;
+  title?: string;
+  author?: string;
+  genre?: string;
+  limit?: number;
+  type?: string;
 }
 
 export interface BookParams {
-  title: any;
+  title: string;
   author_name: string;
   cover_i: string;
 }

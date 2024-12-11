@@ -1,11 +1,8 @@
 import GetRecommendationsbutton from "@/components/shared/GetRecommendationsbutton";
 import MaxWidthWrapper from "@/components/shared/MaxWidthWrapper";
-import { auth } from "@clerk/nextjs/server";
 import React from "react";
 
 const Page = async () => {
-  const { userId } = await auth();
-
   return (
     <>
       <MaxWidthWrapper>

@@ -66,7 +66,8 @@ export const deleteUser = async (params: DeleteUserParams) => {
 export const completeUserOnboarding = async (
   params: CompleteUserOnboardingParams
 ) => {
-  const { authors, genres, books } = params;
+  // const { authors, genres, books } = params;
+  console.log("params", params);
 
   const { userId } = await auth();
 
