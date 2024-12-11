@@ -23,8 +23,6 @@ export const searchBooks = async (params: SearchBookParams) => {
       };
     });
 
-    console.log(formattedBooks);
-
     return formattedBooks;
   } catch (error) {
     console.log(error);

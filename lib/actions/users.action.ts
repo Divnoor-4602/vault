@@ -4,6 +4,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import User from "../../database/user.model";
 import { databaseConnect } from "../mongoose";
 import {
+  CompleteUserOnboardingParams,
   CreateUserParams,
   DeleteUserParams,
   UpdateUserParams,
@@ -61,16 +62,12 @@ export const deleteUser = async (params: DeleteUserParams) => {
   }
 };
 
-interface CompleteUserOnboardingParams {
-  userInterests: {
-    subjects: string[];
-  };
-}
-
 // Clerk users actions
-export const completeUserOnboarding = async ({
-  userInterests,
-}: CompleteUserOnboardingParams) => {
+export const completeUserOnboarding = async (
+  params: CompleteUserOnboardingParams
+) => {
+  const { authors, genres, books } = params;
+
   const { userId } = await auth();
 
   if (!userId) {
@@ -89,7 +86,6 @@ export const completeUserOnboarding = async ({
     // update mongo user with interests
     await updateUser({
       clerk_id: userId,
-      interests: userInterests.subjects,
     });
 
     return { message: res.publicMetadata };

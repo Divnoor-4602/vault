@@ -118,6 +118,7 @@ const BookSelect = ({ onBookSelect }: BookSelectProps) => {
         !searchButtonRef.current.contains(event.target as Node)
       ) {
         setIsOpen(false);
+        inputRef.current!.value = "";
         setSearchTerm("");
       }
     }
@@ -214,6 +215,7 @@ const BookSelect = ({ onBookSelect }: BookSelectProps) => {
                             onClick={() => {
                               handleBookSelect(book);
                               // close the search box
+                              inputRef.current!.value = "";
                               setSearchTerm("");
                               setIsOpen(false);
                             }}

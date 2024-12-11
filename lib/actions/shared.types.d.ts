@@ -17,6 +17,12 @@ export interface DeleteUserParams {
   clerk_id: string | undefined;
 }
 
+export interface CompleteUserOnboardingParams {
+  authors?: string[];
+  genres?: string[];
+  books?: string[];
+}
+
 export interface SearchBookParams {
   title?: string = "";
   author?: string = "";

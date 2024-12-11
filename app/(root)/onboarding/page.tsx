@@ -20,6 +20,9 @@ export default function OnBoardingComponent() {
   const { user } = useUser();
   const router = useRouter();
 
+  // loading state
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   // genre selection states and logic
   const [subjects, setSubjects] =
     useState<{ id: number; name: string; emoji: string; selected: boolean }[]>(
@@ -73,6 +76,8 @@ export default function OnBoardingComponent() {
   // on form submit
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    // only allow to submit if the user has selected atleast 3 genres
     if (subjects.filter((subject) => subject.selected).length < 3) {
       toast.error("Please select atleast 3 genres!");
       return;
@@ -90,25 +95,44 @@ export default function OnBoardingComponent() {
       return;
     }
 
-    const userInterests = {
+    const selectedSubjects = {
       subjects: subjects
         .filter((subject) => subject.selected)
         .map((s) => s.name),
     };
 
-    // todo: generate reccomendation using chatgpt and then show that book to the user to either add in their list or straight up go to dashboard
+    const selectedAuthors = authors
+      .filter((author) => author.selected)
+      .map((a) => a.name);
 
-    // change the middleware to redirect to the dashboard
-    // const res = await completeUserOnboarding({ userInterests });
-    // if (res?.message) {
-    //   // Reloads the user's data from the Clerk API
-    //   console.log("redirecting to dashboard");
-    //   await user?.reload();
-    //   router.push("/dashboard");
-    // }
-    // if (res?.error) {
-    //   toast.error(res?.error);
-    // }
+    const selectedBooks = books;
+
+    // complete the onboarding process and then redirect to dashboard
+
+    try {
+      setIsLoading(true);
+      toast("Completing onboarding process, please wait...");
+      const res = await completeUserOnboarding({
+        authors: selectedAuthors,
+        genres: selectedSubjects.subjects,
+        books: selectedBooks,
+      });
+
+      if (res?.message) {
+        // Reloads the user's data from the Clerk API
+        console.log("redirecting to dashboard");
+        await user?.reload();
+        router.push("/dashboard");
+      }
+      if (res?.error) {
+        toast.error(res?.error);
+      }
+    } catch (error) {
+      toast.error("Failed to complete onboarding process!, try again later.");
+      throw error;
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -161,7 +185,7 @@ export default function OnBoardingComponent() {
               onAuthorSelect={handleAuthorSelect}
             />
 
-            <Button asChild type="submit">
+            <Button asChild type="submit" disabled={isLoading}>
               <EmojiButton label="Get Started" emoji="🚀" />
             </Button>
           </form>
