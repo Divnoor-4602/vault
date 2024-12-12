@@ -14,6 +14,8 @@ export const createUser = async (userData: CreateUserParams) => {
   try {
     await databaseConnect();
 
+    // Create the user and set the user's initial preferences from the metadata
+
     const user = await User.create(userData);
 
     return user;
@@ -27,7 +29,7 @@ export const updateUser = async (params: UpdateUserParams) => {
   try {
     await databaseConnect();
 
-    const { clerk_id, username, email, image_url, interests } = params;
+    const { clerk_id, username, email, image_url, preferences } = params;
 
     const user = await User.findOneAndUpdate(
       { clerk_id },
@@ -35,7 +37,7 @@ export const updateUser = async (params: UpdateUserParams) => {
         username,
         email,
         image_url,
-        interests,
+        preferences,
       },
       {
         new: true,
@@ -77,19 +79,15 @@ export const completeUserOnboarding = async (
   const client = await clerkClient();
 
   try {
+    // update the user's public metadata
     const res = await client.users.updateUser(userId, {
       publicMetadata: {
         onboardingComplete: true,
-      },
-    });
-
-    // update mongo user with interests
-    await updateUser({
-      clerk_id: userId,
-      preferences: {
-        genres: genres || [],
-        authors: authors || [],
-        books: books || [],
+        userPreferences: {
+          authors,
+          genres,
+          books,
+        },
       },
     });
 

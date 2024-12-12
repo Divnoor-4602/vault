@@ -9,7 +9,7 @@ import Link from "next/link";
 
 const Hero = () => {
   return (
-    <MaxWidthWrapper className="mt-44 relative">
+    <MaxWidthWrapper className="mt-8 sm:mt-36 relative">
       <div className="max-w-7xl items-center justify-center flex flex-col ">
         {/* badge */}
         <Badge
@@ -57,16 +57,16 @@ const Hero = () => {
         </svg>
 
         {/* dashboard image */}
-        <div className="mt-10  z-20">
+        <div className="mt-10 z-20 ">
           <Image
             src={dashboardImage}
             alt="dashboard"
             width={1200}
             height={800}
-            className=" border  rounded-2xl  "
+            className=" border rounded-2xl"
           />
         </div>
-        <div className="w-full h-[300px] blur-[80px] bg-gradient-to-r from-blue-400 to-cyan-400 absolute bottom-0 transform-gpu" />
+        <div className="blue__gradient w-full h-[300px]  transform-gpu absolute bottom-0 " />
       </div>
     </MaxWidthWrapper>
   );
