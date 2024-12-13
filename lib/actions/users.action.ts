@@ -1,6 +1,7 @@
 "use server";
 
 import { auth, clerkClient } from "@clerk/nextjs/server";
+// import { auth, clerkClient } from "@clerk/nextjs/server";
 import User from "../../database/user.model";
 import { databaseConnect } from "../mongoose";
 import {
